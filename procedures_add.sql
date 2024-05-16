@@ -253,10 +253,12 @@ CREATE OR REPLACE procedure fill_order (
 p_order_id in order_elems.order_id%TYPE,p_part_id in order_elems.part_id%TYPE , pa_count in order_elems.order_id%TYPE)
 is
 counter int;
+trg int;
 begin 
 select p_count into counter from parts where part_id = p_part_id ;
+select p_status into trg from parts where part_id = p_part_id ;
 
-if pa_count >0 and counter>pa_count-1 then 
+if pa_count >0 and counter>pa_count-1 and trg =0 then 
 insert into order_elems values(p_order_id,p_part_id,pa_count);
 dbms_output.put_line('ok');
 else

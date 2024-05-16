@@ -16,7 +16,7 @@ SELECT XMLELEMENT("Address",
 FROM adress;
 
 drop view adress_xml;
-
+select * from parts;
 -- Представление для таблицы CPU
 CREATE OR REPLACE VIEW CPU_V AS
 SELECT P.part_id, P.p_model, P.manufacturer, P.price, P.p_count, P.p_description,

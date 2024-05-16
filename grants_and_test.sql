@@ -54,12 +54,14 @@ CREATE OR REPLACE procedure fill_order_cust (
 p_order_id in order_elems.order_id%TYPE,p_part_id in order_elems.part_id%TYPE , p_count in order_elems.order_id%TYPE,p_pass in customers.password%TYPE)
 is 
 counter int;
+trg int;
 ch_pass customers.password%TYPE;
 begin 
 select p_count into counter from parts where part_id = p_part_id ;
+select p_status into trg from parts where part_id = p_part_id ;
 
 select password into ch_pass from customers where email = (select email from orders where order_id = p_order_id);
-if p_count >0 and p_pass = ch_pass and counter>p_count-1 then 
+if p_count >0 and p_pass = ch_pass and counter>p_count-1 and trg=0 then 
 insert into order_elems values(p_order_id,p_part_id,p_count);
 dbms_output.put_line('ok');
 else
